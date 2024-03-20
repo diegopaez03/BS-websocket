@@ -1,7 +1,8 @@
-import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { EmpresasService } from './empresas.service';
 import { OnModuleInit } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
+import { EmpresaSocket } from '../common/constants';
 
 @WebSocketGateway()
 export class EmpresasGateway implements OnModuleInit {
@@ -20,5 +21,12 @@ export class EmpresasGateway implements OnModuleInit {
     } );
 
   }
+  
+  @SubscribeMessage(EmpresaSocket.EMIT)
+  async empresa(@MessageBody() data: any) {
+    console.log(EmpresaSocket.EMIT);
+    
+    this.server.emit(EmpresaSocket.ACTUALIZACION, data);
+  } 
 
 }
