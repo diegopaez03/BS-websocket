@@ -23,9 +23,7 @@ export class EmpresasGateway implements OnModuleInit {
   }
   
   @SubscribeMessage(EmpresaSocket.EMIT)
-  async empresa(@MessageBody() data: any) {
-    console.log(EmpresaSocket.EMIT);
-    
+  async empresa(@MessageBody() data: any) {    
     this.server.emit(EmpresaSocket.ACTUALIZACION, data);
   } 
 
